@@ -87,16 +87,14 @@ public class GamePanel extends Canvas
 		
 		Dimension size = new Dimension(windowWidth, windowHeight);
 		
-		Toolkit t = Toolkit.getDefaultToolkit();
-        int x = (int)((t.getScreenSize().getWidth() - windowWidth) / 2);
-        int y = (int)((t.getScreenSize().getHeight() - windowHeight) / 2);
-
 		
-		setScale();
-		setPreferredSize(size);
-		this.setLocation(x, y);
+		
+		this.setScale();
+		this.setPreferredSize(size);
 		
 		this.setSize(windowWidth, windowHeight);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		Game.window.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
 		g = (Graphics2D) image.getGraphics();
 		
