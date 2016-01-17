@@ -10,6 +10,8 @@ public class HUD {
 	
 	private BufferedImage image;
 	private Font font;
+	//TODO update hud
+	//TODO label appropriately
 	
 	public HUD(Player p) {
 		player = p;

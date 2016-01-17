@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 
 public class Game {

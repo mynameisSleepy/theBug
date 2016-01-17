@@ -10,17 +10,19 @@ import entity.Enemy;
 import entity.Explosion;
 import entity.HUD;
 import entity.Player;
-import entity.enemies.Slugger;
+import entity.enemies.Walker;
 import main.GamePanel;
 import tileMap.Background;
 import tileMap.TileMap;
 
 public class Level1State extends GameState {
 	
+	private static final double INIT_PLAYER_POS_X = 100;
+	private static final double INIT_PLAYER_POS_Y = 100;
 	private TileMap tileMap;
 	private Background bg;
 	
-	private Player player;
+	public static Player player;
 	
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
@@ -45,7 +47,7 @@ public class Level1State extends GameState {
 		bg = new Background("/Backgrounds/grassbg1.gif", 0.1);
 		
 		player = new Player(tileMap);
-		player.setPosition(100, 100);
+		player.setPosition(INIT_PLAYER_POS_X, INIT_PLAYER_POS_Y);
 		
 		populateEnemies();
 		
@@ -55,6 +57,7 @@ public class Level1State extends GameState {
 		
 		bgMusic = new AudioPlayer("/Music/level1-1.mp3");
 		//uncomment this line for background music in level 1
+		//TODO create level music
 		//bgMusic.play();
 		
 	}
@@ -63,7 +66,7 @@ public class Level1State extends GameState {
 		
 		enemies = new ArrayList<Enemy>();
 		
-		Slugger s;
+		Walker s;
 		Point[] points = new Point[] {
 			new Point(200, 100),
 			new Point(860, 250),
@@ -72,7 +75,7 @@ public class Level1State extends GameState {
 			new Point(1800, 250)
 		};
 		for(int i = 0; i < points.length; i++) {
-			s = new Slugger(tileMap);
+			s = new Walker(tileMap);
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
@@ -82,7 +85,13 @@ public class Level1State extends GameState {
 	public void update() {
 		
 		// update player
-		player.update();
+		try {
+			player.update();
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			gsm.setState(GameStateManager.LEVEL1STATE);
+		}
+			
 		tileMap.setPosition(
 			GamePanel.WIDTH / 2 - player.getx(),
 			GamePanel.HEIGHT / 2 - player.gety()
@@ -113,6 +122,11 @@ public class Level1State extends GameState {
 				explosions.remove(i);
 				i--;
 			}
+		}
+		
+		//reset the level if player is dead or out of bounds
+		if(player.dead || (player.getx() > tileMap.getWidth() || player.gety() > tileMap.getHeight())) {
+			gsm.setState(GameStateManager.LEVEL1STATE);//
 		}
 		
 	}

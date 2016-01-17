@@ -46,6 +46,7 @@ public class TileMap {
 		numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
 		tween = 0.07;
+
 	}
 	
 	public void loadTiles(String s) {
@@ -125,7 +126,8 @@ public class TileMap {
 	public int getWidth() { return width; }
 	public int getHeight() { return height; }
 	
-	public int getType(int row, int col) {
+	public int getType(int row, int col) throws ArrayIndexOutOfBoundsException{
+		
 		int rc = map[row][col];
 		int r = rc / numTilesAcross;
 		int c = rc % numTilesAcross;

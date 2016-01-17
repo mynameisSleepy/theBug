@@ -11,13 +11,17 @@ import audio.AudioPlayer;
 import tileMap.TileMap;
 
 public class Player extends MapObject {
+	//TODO redo controls
+	//TODO refactor naming
+	//TODO improve sprite
+	//TODO add weapons
 	
 	// player stuff
 	private int health;
 	private int maxHealth;
 	//private int fire;
 	//private int maxFire;
-	private boolean dead;
+	public boolean dead;
 	private boolean flinching;
 	private long flinchTimer;
 	
@@ -292,13 +296,18 @@ public class Player extends MapObject {
 		
 	}
 	
+	/*
+	 * TODO this will need to be broken up into submethods to add room for more complex updates
+	 */
 	public void update() {
-		System.out.println("state:" + currentAction);
 		// update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
+		if(health <= 0) {
+			dead = true;
+		}
 		// check attack has stopped
 		if(currentAction == SCRATCHING) {
 			if(animation.hasPlayedOnce()) scratching = false;

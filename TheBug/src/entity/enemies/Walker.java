@@ -8,11 +8,11 @@ import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
-public class Slugger extends Enemy {
+public class Walker extends Enemy {
 	
 	private BufferedImage[] sprites;
-	
-	public Slugger(TileMap tm) {
+	//refactor to walker
+	public Walker(TileMap tm) {
 		
 		super(tm);
 		
